@@ -2,7 +2,7 @@
  * @Author: lirongren2001
  * @Date: 2025-04-17 10:09:26
  * @LastEditors: renlirong
- * @LastEditTime: 2025-04-19 09:34:49
+ * @LastEditTime: 2025-04-21 19:59:53
  * @Description: 
  */
 
@@ -26,14 +26,14 @@ console.log(mixedData.str)
 
 
 // Answer
-const deepClone = (obj)=>{
-    if(!obj || typeof obj !== 'object') return obj
-    let newObj = Array.isArray(obj)?[]:{}
-    for(let key in obj){
-        console.log(key)
-        if(obj.hasOwnProperty(key)){
-            newObj[key] = deepClone(obj[key])
-        }
-    }
-    return newObj
-}
+// const deepClone = (obj)=>{
+//     if(!obj || typeof obj !== 'object') return obj
+//     let newObj = Array.isArray(obj)?[]:{}
+//     for(let key in obj){
+//         console.log(key)
+//         if(obj.hasOwnProperty(key)){
+//             newObj[key] = deepClone(obj[key])
+//         }
+//     }
+//     return newObj
+// }

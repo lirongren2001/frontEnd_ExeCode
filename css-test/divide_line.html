@@ -1,0 +1,40 @@
+<!--
+ * @Description: 
+ * @Author: renlirong
+ * @Date: 2025-04-21 21:30:40
+ * @LastEditTime: 2025-04-21 22:04:32
+ * @LastEditors: renlirong
+-->
+<!-- 用grid和flex分别实现三列均分布局 -->
+<html>
+<head>
+<style>
+.flex-container {
+  display: flex;
+}
+
+.flex-item {
+  flex: 1;  /* 关键属性：均分剩余空间 */
+  min-width: 0; /* 防止内容溢出破坏布局,可去 */
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 关键属性：创建3等分列 */
+}
+
+</style>
+</head>
+    <body>
+        <div class="flex-container">
+            <div class="flex-item">Item 1</div>
+            <div class="flex-item">Item 2</div>
+            <div class="flex-item">Item 3</div>
+          </div>
+          <div class="grid-container">
+            <div class="grid-item">Item 1</div>
+            <div class="grid-item">Item 2</div>
+            <div class="grid-item">Item 3</div>
+          </div>
+    </body>
+</html>

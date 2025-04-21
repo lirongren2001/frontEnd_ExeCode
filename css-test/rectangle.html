@@ -1,0 +1,30 @@
+<!--
+ * @Description: 
+ * @Author: renlirong
+ * @Date: 2025-04-21 21:53:13
+ * @LastEditTime: 2025-04-21 21:54:19
+ * @LastEditors: renlirong
+-->
+<html>
+<head>
+<style>
+.triangle {
+  width: 0;
+  height: 0;
+  
+  /* 通过边框组合生成三角形 */
+  border-left: 50px solid transparent;   /* 左透明边框 */
+  border-right: 50px solid transparent; /* 右透明边框 */
+  border-bottom: 100px solid #f00;      /* 下边框形成三角形 */
+  
+  /* 调整方向 */
+  /* border-top: 100px solid #f00; */    /* 改为向上三角形 */
+  /* border-left/right 控制底边长度 */
+  /* border-top/bottom 控制高度 */
+}
+</style>
+</head>
+<body>
+    <div class="triangle"></div>
+</body>
+</html>

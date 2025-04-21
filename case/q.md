@@ -2,81 +2,10 @@
 
 ---
 
-4. 并发控制调度器
-要求：实现 `Scheduler` 类，`add` 方法添加异步任务，同时最多执行2个任务
-```javascript
-// 测试用例
-const scheduler = new Scheduler();
 
-// 创建4个异步任务工厂函数（用setTimeout模拟延迟）
-const taskFactory = (order, delay) => 
-  () => new Promise(resolve => 
-    setTimeout(() => {
-      console.log(`执行任务 ${order}`);
-      resolve();
-    }, delay)
-  );
 
-scheduler.add(taskFactory(1, 4000)); // 4000ms后输出：执行任务1
-scheduler.add(taskFactory(2, 3500)); // 3500ms后输出：执行任务2
-scheduler.add(taskFactory(3, 1000)); // 任务1/2完成后，立即执行：执行任务3
-scheduler.add(taskFactory(4, 500));  // 任务1/2完成后，立即执行：执行任务4
 
-/* 正确执行顺序：
- 立即执行任务1和2
- 4000ms后任务1完成，执行任务3
- 3500ms后任务2完成，执行任务4
- 最终输出顺序：1、2、3、4（假设3500 < 4000）
- 但实际时间轴需要符合并发控制逻辑
-*/
-```
 
----
-
-6. 竞态请求控制
-要求：实现 `raceRequests` 函数，3个请求中任意两个成功则返回结果，两个失败则报错
-```javascript
-// 测试用例1：两个成功一个失败
-const req1 = () => new Promise((res) => setTimeout(() => res(1), 100));
-const req2 = () => new Promise((res) => setTimeout(() => res(2), 200));
-const req3 = () => new Promise((res, rej) => setTimeout(() => rej('err'), 300));
-raceRequests([req1, req2, req3]).then(console.log); // 应该输出 [1,2]
-
-// 测试用例2：两个失败
-const reqA = () => new Promise((res, rej) => setTimeout(() => rej('A'), 100));
-const reqB = () => new Promise((res, rej) => setTimeout(() => rej('B'), 200));
-raceRequests([reqA, reqB, req3]).catch(console.log); // 应该输出 ['A','B']
-
-// 测试用例3：三个成功
-const successAll = [() => Promise.resolve(1), () => Promise.resolve(2), () => Promise.resolve(3)];
-raceRequests(successAll).then(console.log); // 输出前两个成功的结果（顺序由完成顺序决定）
-```
-
----
-
-7. Promise.allSettled
-要求：实现 `Promise.allSettled` 的 polyfill
-```javascript
-// 测试用例
-const promises = [
-  Promise.resolve(1),
-  Promise.reject('error'),
-  new Promise(res => setTimeout(() => res(3), 1000))
-];
-
-myAllSettled(promises).then(results => {
-  console.log(results);
-  /* 应该输出：
-  [
-    { status: "fulfilled", value: 1 },
-    { status: "rejected", reason: "error" },
-    { status: "fulfilled", value: 3 }
-  ]
-  */
-});
-```
-
----
 
 9. async/await polyfill
 要求：用生成器+Promise实现 `asyncToGenerator` 函数
@@ -181,7 +110,3 @@ Got: 10 (原始值5, map后10)
 Complete
 */
 ```
-
----
-
-每个测试用例都覆盖了核心要求的关键路径，编写代码时可以参考这些测试用例的预期行为验证功能正确性。完成后可以直接运行这些测试代码验证你的实现。

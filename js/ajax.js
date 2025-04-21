@@ -1,14 +1,25 @@
 /*
  * @Author: lirongren2001
  * @Date: 2025-04-17 10:52:43
- * @LastEditors: lirongren2001
- * @LastEditTime: 2025-04-17 10:54:50
+ * @LastEditors: renlirong
+ * @LastEditTime: 2025-04-21 21:19:40
  * @Description: 
  */
+
 // 实现 myAJAX 函数，支持 GET/POST 和异步回调
 const myAJAX = (method, url, data, headers, success, error) => {
     // 你的实现
-    
+    const req = new XMLHttpRequest()
+    req.open(method,url,true)
+    req.headers = headers
+    req.onreadystatechange = ()=>{
+      if (req.status === 200){
+        success(req.responseText)
+      }else{
+        error('error')
+      }
+    }
+    req.send(data)
   };
   
   // 用例 1: GET 请求
