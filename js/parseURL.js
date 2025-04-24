@@ -1,3 +1,29 @@
+function parseUrlParams(url) {
+  const params = {};
+  const queryString = url.split('?')[1] || '';
+  
+  queryString.split('&').forEach(pair => {
+    const [key, value] = pair.split('=');
+    if (!key) return;
+
+    const decodedKey = decodeURIComponent(key);
+    const decodedValue = value ? decodeURIComponent(value) : '';
+
+    if (params.hasOwnProperty(decodedKey)) {
+      // 处理数组参数（如 skills=js&skills=css）
+      params[decodedKey] = Array.isArray(params[decodedKey]) 
+        ? [...params[decodedKey], decodedValue]
+        : [params[decodedKey], decodedValue];
+    } else {
+      params[decodedKey] = decodedValue;
+    }
+  });
+
+  return params;
+}
+
+
+
 function parseUrl(urlString) {
     const url = new URL(urlString);
     return {
@@ -74,3 +100,4 @@ function parseURL(url) {
   // 示例
   const url = 'https://www.example.com:8080/path/to/page?name=Alice&age=25#section';
   console.log(parseURL(url));
+
