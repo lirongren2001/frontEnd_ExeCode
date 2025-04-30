@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: renlirong
  * @Date: 2025-04-24 22:52:55
- * @LastEditTime: 2025-04-24 22:53:07
+ * @LastEditTime: 2025-04-27 10:06:59
  * @LastEditors: renlirong
  */
 // 实现简单 Virtual DOM 转真实 DOM
@@ -47,4 +47,42 @@ function render(vnode) {
     ]
   };
 
+
+  function createDom(vnode) {
+    if (typeof vnode === 'string') {
+      return document.createTextNode(vnode);
+    }
+    const dom = document.createElement(vnode.type);
+    if (vnode.props) {
+      for (const [key, value] of Object.entries(vnode.props)) {
+        dom.setAttribute(key, value);
+      }
+    }
+    return dom;
+  }
+  
+  function renderBFS(vnode) {
+    const root = createDom(vnode);
+    const queue = [];
+    
+    if (vnode.children) {
+      vnode.children.forEach(child => {
+        queue.push({ childVnode: child, parentDom: root });
+      });
+    }
+    
+    while (queue.length > 0) {
+      const { childVnode, parentDom } = queue.shift();
+      const childDom = createDom(childVnode);
+      parentDom.appendChild(childDom);
+      
+      if (childVnode.children) {
+        childVnode.children.forEach(child => {
+          queue.push({ childVnode: child, parentDom: childDom });
+        });
+      }
+    }
+    
+    return root;
+  }
   

@@ -17,7 +17,7 @@ const List = React.memo(({ items }) => {
     );
 });
 
-const ListItem = React.memo({ item }) => {
+const ListItem = React.memo(({ item }) => {
     console.log('ListItem rendered');
     return <li>{item.name}</li>;
-};
+});
